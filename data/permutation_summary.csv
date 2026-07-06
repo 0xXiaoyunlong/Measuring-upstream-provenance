@@ -1,0 +1,4 @@
+crew_set,model,observed_auroc,n_permutations,p_value,null_mean
+17_crews,logistic,0.6873,1000,0.04396,0.5325
+17_crews,boosting,0.6854,300,0.04651,0.5341
+18_crews,logistic,0.6169,1000,0.16583,0.5193

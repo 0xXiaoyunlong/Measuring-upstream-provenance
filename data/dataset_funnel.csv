@@ -1,0 +1,7 @@
+stage,n_candidates,description
+0_census,86,all direct Tornado Cash depositors found in the DeFiHackLabs incident library
+1_gate_eligible,48,"passed census bucketing (48 gate-eligible; 20 professional-scale, 2 repeat, 10 already-known, 5 timing-mismatch, 1 whitehat set aside)"
+2_on_chain_verified,38,Gate 1: address really made a direct pool deposit with timing matching its incident
+3_attributed,21,Gate 2: backed by an official attribution or two independent forensic sources
+4_independent,19,Gate 3: merged crews that shared funders or sibling wallets
+5_measurable,12,Gate 4: frozen feature extraction succeeded and passed the missingness precheck -> 12 new crews

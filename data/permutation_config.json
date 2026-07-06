@@ -1,0 +1,12 @@
+{
+  "round": "L25",
+  "seed": 20260629,
+  "n_permutations": 1000,
+  "permutation_unit": "actor_group_block",
+  "positive_group_count": 17,
+  "unknown_background_count": 139,
+  "model": "logreg",
+  "split": "LOAGO_leave_one_actor_group_out",
+  "metric": "AUROC",
+  "empirical_p_formula": "p = (1 + #{permuted_AUROC >= observed}) / (1 + N)"
+}

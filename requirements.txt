@@ -1,0 +1,12 @@
+# Reproducing the results needs three common packages.
+numpy
+scikit-learn
+matplotlib
+
+# xgboost is only needed to re-run the gradient-boosting model or re-collect data;
+# the main results reproduce without it.
+# xgboost
+
+# The learned-model results reproduce to the last digit for 15 of the 17 crews on a
+# recent scikit-learn; two single-event crews can shift slightly (see README). For
+# the exact archived numbers, use the pinned versions in requirements-exact.txt.
