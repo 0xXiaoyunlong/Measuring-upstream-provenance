@@ -1,0 +1,17 @@
+# Conda environment for the scikit-learn 1.3.2 reference run.
+#   conda env create -f environment.yml
+#   conda activate upstream-provenance-canonical
+#   python run_all.py
+name: upstream-provenance-canonical
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11.9
+  - numpy=1.26.4
+  - scipy=1.17.1
+  - scikit-learn=1.3.2
+  - joblib=1.5.3
+  - threadpoolctl=3.6.0
+  - matplotlib=3.8.2
+  - pillow=12.3.0
+  - pip

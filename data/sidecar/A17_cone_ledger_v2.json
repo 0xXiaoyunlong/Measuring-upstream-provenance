@@ -1,0 +1,27 @@
+{
+ "0x03560a9d7a2c391fb1a087c33650037ae30de3aa": {
+  "deposit": {
+   "ts": 1722524927
+  },
+  "cone": {
+   "0x03560a9d7a2c391fb1a087c33650037ae30de3aa": {
+    "boundary": false,
+    "in": [
+     [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      60.058285738671884,
+      1722524819
+     ]
+    ],
+    "out": [],
+    "init": 0.0
+   },
+   "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": {
+    "boundary": true,
+    "in": [],
+    "out": [],
+    "init": 0.0
+   }
+  }
+ }
+}

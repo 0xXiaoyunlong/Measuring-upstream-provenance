@@ -1,0 +1,37 @@
+{
+  "auprc": {
+    "macro": 0.538149725049081,
+    "ci_lo": 0.36603678896555664,
+    "ci_hi": 0.7137261268143621,
+    "macro_fold_prevalence": 0.15278881249469486,
+    "global_prevalence": 0.17751479289940827
+  },
+  "sign_test": {
+    "vs_0.53_empirical_null": {
+      "above": 12,
+      "below": 5,
+      "ties": 0,
+      "p": 0.143463134765625
+    },
+    "vs_0.5": {
+      "above": 12,
+      "below": 4,
+      "ties": 1,
+      "p": 0.076812744140625
+    }
+  },
+  "pu_correction": {
+    "observed_macro": 0.7029490117725412,
+    "corrected": {
+      "0.05": 0.7136305387079381,
+      "0.1": 0.7254989019694902,
+      "0.2": 0.7536862647156765
+    }
+  },
+  "binding": {
+    "cone_cap_25_hit": 6,
+    "of_cones": 167,
+    "coverage_stop_events": 5,
+    "of_events": 169
+  }
+}

@@ -5,18 +5,24 @@ type: dataset
 authors:
   - family-names: "Xiao"
     given-names: "Yunlong"
+  - family-names: "Lim"
+    given-names: "Byunghwa"
 abstract: >-
   Data and code for a forensic measurement of how far the upstream provenance
   before a cryptocurrency mixer deposit reaches across distinct laundering crews.
   Includes an evidence-gated dataset of 169 Tornado Cash entrance deposits, the
-  reference feature-extraction code, the cross-crew evaluation, and scripts that
-  regenerate every figure from the data.
+  reference feature-extraction code, the cross-crew evaluation, the temporally
+  balanced background control (balanced_background/), and the figure scripts that
+  regenerate Figures 3-7 and C1 from the archived data (Figures 1 and 2 are
+  static overview graphics, verified by SHA-256).
 keywords:
   - cryptocurrency mixer
   - anti-money-laundering forensics
   - upstream provenance
   - cross-actor generalization
   - missingness audit
-license: MIT
+license: 
+  - MIT
+  - CC-BY-4.0
 repository-code: "https://github.com/0xXiaoyunlong/Measuring-upstream-provenance"
 # doi: "TODO on publication"

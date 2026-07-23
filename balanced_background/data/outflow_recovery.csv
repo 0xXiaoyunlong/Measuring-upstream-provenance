@@ -1,0 +1,13 @@
+crew,source_address,nodes_queried,nodes_recovered,recovery_status
+N01,0xdf31f4c8dc9548eb4c416af26dc396a25fde4d5f,1,0,unrecoverable (public node rate-limited)
+N02,0xb687550842a24d7fbc6aad238fd7e0687ed59d55,1,0,unrecoverable (public node rate-limited)
+N03,0xb19b7f59c08ea447f82b587c058ecbf5fde9c299,0,0,no outflow to recover (origin was an EOA)
+N04,0x1751e3e1aaf1a3e7b973c889b7531f43fc59f7d0,1,0,unrecoverable (public node rate-limited)
+N05,0x5384b34c74024d6563b323351a4bbfa18432161b,2,1,partially recovered
+N06,0x1fd0a6a5e232eeba8020a40535ad07013ec4ef12,0,0,no outflow to recover (origin was an EOA)
+N07,0xe66b37de57b65691b9f4ac48de2c2b7be53c5c6f,2,2,fully recovered
+N08,0x63136677355840f26c0695dd6de5c9e4f514f8e8,2,1,partially recovered
+N09,0x792ec27874e1f614e757a1ae49d00ef5b2c73959,0,0,no outflow to recover (origin was an EOA)
+N10,0x0cfc28d16d07219249c6d6d6ae24e7132ee4caa7,2,1,partially recovered
+N11,0x22c9736d4fc73a8fa0eb436d2ce919f5849d6fd2,2,0,unrecoverable (public node rate-limited)
+N12,0x81f48a87ec44208c691f870b9d400d9c13111e2e,0,0,no outflow to recover (origin was an EOA)

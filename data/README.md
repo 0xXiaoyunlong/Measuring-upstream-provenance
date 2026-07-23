@@ -65,46 +65,71 @@ they would undo the paper's pseudonymisation of N01–N12. The full dossiers
 (attribution write-ups, URLs, per-gate memos) stay in the versioned archive and
 can be provided to editors on request.
 
-## The results (archived, cite these)
+## The results (recomputed by the scripts under scikit-learn 1.3.2)
+
+These CSVs are **overwritten by the scripts** in `code/02_evaluate_cross_actor/`,
+so they always match the run. All AUROC/CI/observed/p values come from the same
+reference-environment run (scikit-learn 1.3.2). The **logistic model only** — the
+gradient-boosting rows were removed (no executable boosting pipeline ships here).
 
 ### `per_crew_results.csv` — per-crew AUROC (17 rows)
-The canonical per-crew results (the paper's Table B1). Columns: `crew`,
-`crew_type`, `n_events`, `n_background_in_cohort`, `auroc_logistic`,
-`auroc_boosting`. The plain average of `auroc_logistic` is the paper's headline
-**0.6824**.
+The per-crew table out of `evaluate.py`. Columns: `crew`, `crew_type`, `n_events`,
+`n_background_in_cohort`, `auroc_logistic`. The plain average of `auroc_logistic`
+is the headline **0.702949, reported 0.703**.
 
-### `per_event_predictions.csv` — the archived held-out scores (338 rows)
-Every one of the 169 deposits gets a held-out prediction from the fold it was
-tested in, for both models (169 × 2). Columns: `event_id`, `crew`, `is_illicit`,
-`held_out_fold`, `model`, `score`, `rank_percentile`. These are the frozen
-out-of-fold scores the per-crew AUROCs were computed from — recompute any crew's
-AUROC from its cohort's scores and you land on `per_crew_results.csv`, with one
-footnote: scores are archived to 5 decimal places, and in the N12 cohort that
-rounding creates a tie the full-precision scores didn't have. `rank_percentile`
-keeps the exact within-fold order, which resolves it (archived 0.8333). Ties in
-the boosting scores are real ties (identical model outputs) and count as
-half-wins, as usual for AUROC.
+### `per_event_predictions.csv` — held-out scores (169 rows)
+Every one of the 169 deposits gets one held-out logistic
+prediction from the fold it was tested in. Columns: `event_id`, `crew`,
+`is_illicit`, `held_out_fold`, `model` (`logistic`), `score`, `rank_percentile`.
+The scores are **full precision** (not rounded), so recomputing any crew's AUROC
+from its cohort's scores reproduces `per_crew_results.csv` exactly.
 
 ### `main_results.csv` — headline AUROCs (2 rows)
-The primary (17 crews) and sensitivity (18 crews) results: `auroc`, 95% interval
-(`ci_low`, `ci_high`), the permutation `permutation_observed` value, and `p_value`.
+Written by `evaluate.py` (AUROC, CI) and `permutation_test.py` (the permutation
+columns). The primary (17 crews) and sensitivity (18 crews) results: `auroc`, 95%
+interval (`ci_low`, `ci_high`), `permutation_observed` (equals `auroc`), and
+`p_value` — the `p_value` here is the **(legacy) group-count-preserving harness**
+p-value (0.027 for 17 crews, 0.146 for 18).
 
-### `permutation_null.csv` — the null distribution
-The shuffled AUROCs from the crew-preserving permutation test. Columns:
-`permutation_id`, `crew_set` (`17_crews` / `18_crews`), `model`
-(`logistic` / `boosting`), `shuffled_auroc`. 1000 logistic + 300 boosting for
-17 crews, 1000 logistic for 18 crews.
+### `permutation_null.csv` — the null distribution (group-count harness)
+Written by `permutation_test.py`. Columns: `crew_set` (`17_crews` / `18_crews`),
+`model` (`logistic`), `shuffled_auroc`; 1000 shuffles per crew set.
 
-### `permutation_summary.csv` — observed values and p-values
-Per (`crew_set`, `model`): `observed_auroc`, `n_permutations`, `p_value`,
-`null_mean` (≈ 0.53, not 0.5 — see the paper).
+### `permutation_summary.csv` — observed values and p-values (group-count harness)
+Per (`crew_set`, `model`): `observed_auroc`,
+`n_permutations`, `p_value`, `null_mean` (≈ 0.53, not 0.5 — see the paper). The
+observed value equals the macro AUROC that `evaluate.py` reports; it is recomputed,
+not archived. NaN permutations (degenerate folds) are dropped from both numerator
+and denominator, so `n_permutations` can be just under 1000.
 
-### `permutation_config.json` — the frozen test configuration
-The permutation run's config file, verbatim from the archive: seed 20260629,
-1000 permutations, shuffling whole actor-group blocks (17 positive groups kept),
-and the p-value formula `p = (1 + #{permuted ≥ observed}) / (1 + N)`.
-Field names inside are the archive's internal ones (e.g. the split is called
-`LOAGO_leave_one_actor_group_out` — that's the paper's leave-one-crew-out).
+### `permutation_legacy_summary.csv` — the same, labelled `legacy_group_count_preserving_null`
+Identical to `permutation_summary.csv` with an
+explicit `null_name` column, so the harness null cannot be mistaken for the
+corrected sensitivity below.
+
+### `permutation_config.json` — the harness test configuration
+Written by `permutation_test.py`: `null_name` = `legacy_group_count_preserving_null`,
+seed 20260629, 1000 permutations, shuffling whole actor-group blocks (17 crew + 139
+background singleton = 156, pick 17), p-value formula
+`p = (1 + #{permuted ≥ observed}) / (1 + N)`, and a pointer to the corrected sensitivity.
+
+### `permutation_sensitivity_null.csv` — the corrected + conditional nulls
+One row per shuffle from `permutation_sensitivity.py`: `null_variant`
+(`corrected_154block` / `singleton_conditional_sizematched`), `shuffled_auroc`,
+`n_positive_groups`, `n_positive_events`, `max_block_size` — so the block-size
+distribution the null actually draws is auditable.
+
+### `permutation_sensitivity_summary.csv` — the corrected + conditional p-values
+Written by `permutation_sensitivity.py`. Per `null_variant`: `observed_auroc`,
+`n_permutations`, `p_value` (**reported as-is**, never tuned for significance),
+`null_mean`, `preservation_note`. The `corrected_154block` null de-duplicates
+background by address (154 immutable blocks); the `singleton_conditional_sizematched`
+null is a different estimand over the 16 single-deposit crews (Harmony excluded).
+
+### `permutation_sensitivity_config.json` — the sensitivity null definitions
+Written by `permutation_sensitivity.py`: block construction, what each null does and
+does not preserve, the `NOT_IDENTIFIABLE_WITH_AVAILABLE_BACKGROUND_BLOCKS` note, NaN
+handling, and the relationship to the primary null (see the two-nulls section of the root README).
 
 While I'm at it, the bootstrap behind every confidence interval in these files:
 resampling unit is the **crew** (never individual deposits — pre-registered that
@@ -120,12 +145,24 @@ recovered, nothing to recover, or unrecoverable). Tally: 1 fully, 3 partially,
 4 nothing-to-recover, 4 unrecoverable.
 
 ### `missingness_audit_metrics.csv` — AUROC before vs after recovery
-Per `stage` (`before_recovery` / `after_recovery`) and `feature_set`
-(provenance / factory-pattern / combined): `auroc`, `ci_low`, `ci_high`.
+Recomputed by `missingness_audit.py` under scikit-learn 1.3.2, so the provenance
+(Phi) baseline here is the same **0.703** the main analysis reports. Per `stage`
+(`before_recovery` / `after_recovery`) and `feature_set` (provenance /
+factory-pattern / combined): `auroc`, `ci_low`, `ci_high`. Factory-pattern alone
+drops from 0.75 (before) to 0.51 (after recovery).
 
 ### `missingness_audit_increments.csv` — marginal AUROC of factory-pattern
-The AUROC change of factory-pattern (and combined) over provenance alone, after
-recovery: `auroc_change`, `ci_low`, `ci_high`. Both intervals span zero.
+Written by `missingness_audit.py`. The AUROC change of factory-pattern (and
+combined) over provenance alone, after recovery: `auroc_change`, `ci_low`,
+`ci_high`. The combined increment is -0.006 with a CI that spans zero.
+
+### factory / sensitivity inputs
+`sidecar/sidecar_features_before_recovery.csv` and
+`sidecar/sidecar_features_after_recovery.csv` are the factory (`fac_*`) feature
+tables (before and after out-edge recovery), read by `missingness_audit.py` (both
+live in the `sidecar/` subfolder, described in `sidecar/README.md`). `lfi_q25_features.csv`
+is the one extra cross-chain crew (N13) used by the 18-crew sensitivity in
+`evaluate.py`. These are frozen inputs, keyed to the deposits by address.
 
 ### `missingness_by_crew.csv` — the missingness heatmap (18 rows)
 For each crew (and the background pool): the share of that crew's events for which

@@ -1,0 +1,3 @@
+null_variant,observed_auroc,n_permutations,p_value,null_mean,preservation_note
+corrected_154block,0.7029490117725413,1000,0.030969030969030968,0.5310815124418066,positive_block_count_preserved=17; event_count/block_size NOT preserved (unconditional size-matched null NOT_IDENTIFIABLE_WITH_AVAILABLE_BACKGROUND_BLOCKS; only a Harmony-pinned conditional/stratified null is size-matched)
+singleton_conditional_sizematched,0.7785330988455988,1000,0.000999000999000999,0.5037078388625263,"block_size matched exactly (all size 1); Harmony excluded; estimand = macro AUROC over 16 singleton crews, K=16"

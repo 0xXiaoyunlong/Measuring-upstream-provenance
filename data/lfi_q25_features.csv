@@ -1,0 +1,2 @@
+candidate_id,a0,incidents,t0_utc,observed_hops,path_elapsed_time,dwell_mean_h,dwell_max_h,coverage,attribution_ambiguous,node_context_out_degree,node_context_in_degree,wallet_age_min_h,node_context_resid_Rrange_max,node_context_resid_nin_mean,node_context_resid_nout_mean,boundary_type,censoring_reason,observation_confidence
+Q25,0x11576cb3d8d6328cf319e85b10e09a228e84a8de,LFI(2023-05),2023-06-10T02:51:59Z,2,92.27,56.236666666666665,56.236666666666665,1.0,False,54.0,21.0,167.68333333333334,6663.961098335048,103.0,206.0,asset-conversion,cross-asset,1.0

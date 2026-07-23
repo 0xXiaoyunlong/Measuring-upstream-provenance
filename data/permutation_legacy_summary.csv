@@ -1,0 +1,3 @@
+null_name,crew_set,model,observed_auroc,n_permutations,p_value,null_mean
+legacy_group_count_preserving_null,17_crews,logistic,0.7029490117725412,1000,0.026973026973026972,0.5319558303041496
+legacy_group_count_preserving_null,18_crews,logistic,0.6311387686387686,1000,0.14585414585414586,0.5244526432452028

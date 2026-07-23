@@ -1,0 +1,28 @@
+{
+  "reference": "Ojala & Garriga (2010), immutable-block variant",
+  "seed": 20260629,
+  "n_permutations": 1000,
+  "model": "logistic",
+  "metric": "AUROC",
+  "split": "LOAGO_leave_one_actor_group_out",
+  "empirical_p_formula": "p = (1 + #{permuted_AUROC >= observed}) / (1 + N)",
+  "nan_handling": "permutations whose macro AUROC is NaN (a degenerate fold with no estimable positive) are dropped from BOTH numerator and denominator, so the effective N can fall just below the nominal 1000; the effective N is the n_permutations column of permutation_sensitivity_summary.csv.",
+  "relationship_to_primary": "The corrected 154-block null computed here is the one the paper quotes for the two main models (p = 0.031 original background, 0.002 balanced); the group-count-preserving null from permutation_test.py is reported alongside (p = 0.027 / 0.003) and is the p carried by the 30-variant battery rows, where the corrected blocks are not re-derived. This file never overwrites the other null's outputs; which null is quoted where was pre-committed, independent of which p-value is smaller -- both ship in data/. See the two-nulls section of the root README.",
+  "nulls": {
+    "corrected_154block": {
+      "blocks": "17 illicit-crew blocks + 137 background address-blocks = 154",
+      "background_dedup": "background events grouped by lowercase deposit address (139 events -> 137 addresses; two addresses deposit twice)",
+      "draw": "each shuffle selects 17 of the 154 blocks as illicit, blocks kept intact",
+      "preserved": "number of positive blocks (17); full block integrity",
+      "not_preserved": "number of positive events; block-size distribution",
+      "identifiability": "unconditional size-matched null is NOT_IDENTIFIABLE_WITH_AVAILABLE_BACKGROUND_BLOCKS (no background block has 14 deposits to match Harmony, the unique size-14 block); a Harmony-pinned conditional/stratified null IS size-matched but cannot test Harmony's own label, so variant B (Harmony-excluded) is reported instead"
+    },
+    "singleton_conditional_sizematched": {
+      "blocks": "16 singleton illicit-crew blocks + 137 background address-blocks",
+      "draw": "each shuffle selects 16 size-1 blocks as illicit (block-size matched)",
+      "preserved": "number of positive groups (16) AND block size (all 1)",
+      "estimand": "macro AUROC over the 16 single-deposit crews, K=16 folds, Harmony excluded -- a different estimand from the 0.703 primary",
+      "identifiability": "IDENTIFIABLE (conditional on excluding the one multi-event crew)"
+    }
+  }
+}

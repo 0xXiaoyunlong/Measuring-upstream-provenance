@@ -1,0 +1,16 @@
+{
+  "reference": "Ojala & Garriga (2010)",
+  "seed": 20260629,
+  "n_permutations": 1000,
+  "null_name": "legacy_group_count_preserving_null",
+  "permutation_unit": "actor_group_block",
+  "model": "logistic",
+  "split": "LOAGO_leave_one_actor_group_out",
+  "metric": "AUROC",
+  "observed_equals_point_estimate": true,
+  "empirical_p_formula": "p = (1 + #{permuted_AUROC >= observed}) / (1 + N)",
+  "nan_handling": "permutations with a NaN macro AUROC (a degenerate fold) are dropped from both numerator and denominator; the effective N is the n_permutations column of permutation_summary.csv and can fall just below the nominal 1000.",
+  "null_definition": "17 illicit-crew blocks + 139 background singleton blocks (156 total); each shuffle selects 17 blocks as illicit. Fixes the number of positive actor-groups (17), not the number of positive events (crews differ in size; Harmony has 14 deposits). Background blocks are one-per-deposit.",
+  "role": "PRIMARY null whose p-value is reported and written into main_results.csv.",
+  "corrected_sensitivity": "permutation_sensitivity.py de-duplicates background by address into 137 immutable blocks (154 total) and adds a block-size-matched conditional null; those p-values are reported as-is and never overwrite these files. A positive-event-count / block-size-matched null over the full set is NOT_IDENTIFIABLE_WITH_AVAILABLE_BACKGROUND_BLOCKS (no 14-deposit background block to match Harmony)."
+}

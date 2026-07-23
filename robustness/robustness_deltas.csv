@@ -1,0 +1,30 @@
+family,variant,auroc,delta_vs_canonical,canonical_baseline
+phi_parameter,Window 3d,0.6721,-0.0308,0.7029
+phi_parameter,Window 5d,0.698,-0.0049,0.7029
+phi_parameter,Depth 1 hop,0.489,-0.2139,0.7029
+phi_parameter,Value floor 15 ETH,0.6901,-0.0128,0.7029
+phi_parameter,Value floor 20 ETH,0.6611,-0.0418,0.7029
+phi_parameter,Share floor 0.2V,0.5999,-0.103,0.7029
+phi_parameter,Window 14 d,0.7217,0.0188,0.7029
+phi_parameter,Depth 3 hops,0.6749,-0.028,0.7029
+feature_ablation,− path timing,0.6915,-0.0114,0.7029
+feature_ablation,Geometry only,0.6783,-0.0246,0.7029
+feature_ablation,− source context,0.5787,-0.1242,0.7029
+feature_ablation,− all observability,0.5796,-0.1233,0.7029
+leave_one_crew_out,drop Audius,0.6701,-0.0328,0.7029
+leave_one_crew_out,drop Beanstalk,0.6896,-0.0133,0.7029
+leave_one_crew_out,drop Convergence,0.6668,-0.0361,0.7029
+leave_one_crew_out,drop N01,0.6706,-0.0323,0.7029
+leave_one_crew_out,drop N02,0.672,-0.0309,0.7029
+leave_one_crew_out,drop N03,0.6163,-0.0866,0.7029
+leave_one_crew_out,drop N04,0.7279,0.025,0.7029
+leave_one_crew_out,drop N05,0.6559,-0.047,0.7029
+leave_one_crew_out,drop N06,0.6168,-0.0861,0.7029
+leave_one_crew_out,drop N07,0.6776,-0.0253,0.7029
+leave_one_crew_out,drop N08,0.674,-0.0289,0.7029
+leave_one_crew_out,drop N09,0.6487,-0.0542,0.7029
+leave_one_crew_out,drop N10,0.6677,-0.0352,0.7029
+leave_one_crew_out,drop N11,0.7163,0.0134,0.7029
+leave_one_crew_out,drop N12,0.612,-0.0909,0.7029
+leave_one_crew_out,drop Harmony,0.8255,0.1226,0.7029
+leave_one_crew_out,drop Monkey,0.7392,0.0363,0.7029

@@ -1,0 +1,50 @@
+{
+  "Window 3 d": {
+    "variant": 0.6666028416028417,
+    "folds": 15,
+    "paired_baseline": 0.7318919968919969,
+    "baseline_folds": 15,
+    "delta": -0.06528915528915524,
+    "n_dropped": 4
+  },
+  "Window 5 d": {
+    "variant": 0.6962896478521479,
+    "folds": 16,
+    "paired_baseline": 0.7256712037962038,
+    "baseline_folds": 16,
+    "delta": -0.029381555944055893,
+    "n_dropped": 3
+  },
+  "Depth 1 hop": {
+    "variant": 0.4890453296703297,
+    "folds": 8,
+    "paired_baseline": 0.5951766983016983,
+    "baseline_folds": 8,
+    "delta": -0.10613136863136857,
+    "n_dropped": 13
+  },
+  "Value floor 15 ETH": {
+    "variant": 0.7145949288806431,
+    "folds": 14,
+    "paired_baseline": 0.6962680176965892,
+    "baseline_folds": 14,
+    "delta": 0.01832691118405394,
+    "n_dropped": 3
+  },
+  "Value floor 20 ETH": {
+    "variant": 0.664428428714143,
+    "folds": 14,
+    "paired_baseline": 0.6962680176965892,
+    "baseline_folds": 14,
+    "delta": -0.03183958898244621,
+    "n_dropped": 3
+  },
+  "Share floor 0.2 V": {
+    "variant": 0.5844998751248751,
+    "folds": 8,
+    "paired_baseline": 0.5951766983016983,
+    "baseline_folds": 8,
+    "delta": -0.01067682317682317,
+    "n_dropped": 13
+  }
+}

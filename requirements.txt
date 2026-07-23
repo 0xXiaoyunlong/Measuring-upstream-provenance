@@ -1,12 +1,13 @@
-# Reproducing the results needs three common packages.
+# Reproducing the results needs four common packages.
 numpy
+scipy
 scikit-learn
 matplotlib
 
-# xgboost is only needed to re-run the gradient-boosting model or re-collect data;
-# the main results reproduce without it.
-# xgboost
-
-# The learned-model results reproduce to the last digit for 15 of the 17 crews on a
-# recent scikit-learn; two single-event crews can shift slightly (see README). For
-# the exact archived numbers, use the pinned versions in requirements-exact.txt.
+# For the canonical reference result (macro AUROC 0.702949, reported 0.703) use the
+# exact pins in requirements-exact.txt -- in particular scikit-learn==1.3.2 and the
+# pinned SciPy. A few single-event crews are near ranking ties, so on a different
+# BLAS/CPU the full-precision value may drift slightly; there is no bit-for-bit
+# cross-hardware claim. The canonical evaluation covers the logistic model only;
+# the gradient-boosting rows were removed (no executable boosting pipeline ships
+# with this package).
