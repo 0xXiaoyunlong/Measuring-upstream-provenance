@@ -2,27 +2,29 @@ cff-version: 1.2.0
 title: "Measuring Upstream Provenance at Cryptocurrency Mixer Entrances: A Cross-Actor Forensic Study"
 message: "If you use this data or code, please cite the paper."
 type: dataset
+version: 1.0.1
+date-released: "2026-08-01"
 authors:
   - family-names: "Xiao"
     given-names: "Yunlong"
+    orcid: "https://orcid.org/0009-0004-3577-4054"
+    affiliation: "Sungkyunkwan University"
   - family-names: "Lim"
-    given-names: "Byunghwa"
+    given-names: "Byung Hwa"
+    orcid: "https://orcid.org/0000-0003-4342-1895"
+    affiliation: "Sungkyunkwan University"
 abstract: >-
   Data and code for a forensic measurement of how far the upstream provenance
-  before a cryptocurrency mixer deposit reaches across distinct laundering crews.
-  Includes an evidence-gated dataset of 169 Tornado Cash entrance deposits, the
-  reference feature-extraction code, the cross-crew evaluation, the temporally
-  balanced background control (balanced_background/), and the figure scripts that
-  regenerate Figures 3-7 and C1 from the archived data (Figures 1 and 2 are
-  static overview graphics, verified by SHA-256).
+  before a cryptocurrency mixer deposit reaches across distinct laundering
+  actors. Includes an evidence-gated dataset of 169 Tornado Cash entrance
+  deposits, the reference feature-extraction code, the cross-actor evaluation,
+  the temporally balanced background control, and the figure scripts that
+  regenerate Figures 3-7 and C1 from the archived data.
 keywords:
   - cryptocurrency mixer
   - anti-money-laundering forensics
   - upstream provenance
   - cross-actor generalization
   - missingness audit
-license: 
-  - MIT
-  - CC-BY-4.0
+license: MIT
 repository-code: "https://github.com/0xXiaoyunlong/Measuring-upstream-provenance"
-# doi: "TODO on publication"
