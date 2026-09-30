@@ -2,8 +2,7 @@
 
 These two files are the exact code that extracted every feature in
 `data/upstream_features.csv`. They were frozen before any evaluation ran, and
-their SHA-256 fingerprints were recorded at freeze time (and re-checked before
-and after every run):
+their SHA-256 fingerprints were recorded at freeze time:
 
 ```
 18c2db6051ca971cd2d5eac4fd1480ba332038bbc0746c8ef7700a8308b10de7  phi.py

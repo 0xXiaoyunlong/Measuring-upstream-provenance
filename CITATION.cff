@@ -2,8 +2,8 @@ cff-version: 1.2.0
 title: "Measuring Upstream Provenance at Cryptocurrency Mixer Entrances: A Cross-Actor Forensic Study"
 message: "If you use this data or code, please cite the paper."
 type: dataset
-version: 1.0.1
-date-released: "2026-08-01"
+version: 1.0.2
+date-released: "2026-09-30"
 authors:
   - family-names: "Xiao"
     given-names: "Yunlong"

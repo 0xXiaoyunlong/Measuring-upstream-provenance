@@ -71,8 +71,7 @@ then `robustness/run_robustness.py` (recomputes the robustness perturbations
 from the frozen cones and renders the data tables + battery figures), the
 **figure scripts** (`fig3_signal.py`, `fig4_audit.py`, `figC1_heatmap.py`, and
 the two-background `fig5_forest.py`, `fig6_timeline.py`, `fig7_dualcontrol.py`),
-a hash check on the two static figures (`fig1_dataset.png`, `fig2.png`), a
-rebuild of `SHA256SUMS.txt`, and final consistency checks.
+a rebuild of `SHA256SUMS.txt`, and final consistency checks.
 Every step uses single-thread BLAS and fails the whole run on any error; nothing
 falls back to an old CSV or the network. (`--fast` runs a 100-shuffle permutation
 for a smoke test — not a publishable run, and it never touches `data/`, `figures/`,
@@ -87,7 +86,6 @@ command re-checks every headline number against what is on disk. The two
 overview graphics have no scripts: Fig 1 is the dataset waterfall, hand-finished
 from the counts in `data/dataset_funnel.csv`, and Fig 2 is the hand-polished
 schematic of the backward funding cone with no experimental values in it.
-`run_all.py` checks both against recorded hashes.
 
 **Sidecar.** The factory-pattern (missingness) audit is recomputed under 1.3.2 from
 the underlying tables in `data/sidecar/`; the *before-recovery* factory features are
@@ -137,7 +135,7 @@ fold-reassignment check) each have their own script and archived output in
 ```
 ├── run_all.py                                   one-command end-to-end reproduction
 ├── requirements-exact.txt / requirements.txt   the reference environment
-├── SHA256SUMS.txt                               fingerprints of every file
+├── SHA256SUMS.txt                               checksums (`sha256sum -c SHA256SUMS.txt`)
 ├── data/                                        169 deposits, the folds, and the derived result CSVs
 │   └── sidecar/                                 underlying factory tables + frozen cones for the audit
 ├── code/
@@ -157,7 +155,7 @@ Each `code/` folder has its own README; `robustness/` has `README.md`,
 renderer), `inputs/` (frozen cones), and `appendix_checks/`.
 
 Data availability: evidence-gate decisions in `data/evidence_gate_decisions.csv` /
-`data/dataset_funnel.csv`; frozen extraction code with SHA-256 in
+`data/dataset_funnel.csv`; frozen extraction code in
 `archive/frozen_extraction/`; fold assignments in the `held_out_fold` column of
 `data/entrance_events.csv` (backgrounds by `sha256(address) % 17`, re-derived on
 every run); per-cohort predictions in `data/per_event_predictions.csv` (169

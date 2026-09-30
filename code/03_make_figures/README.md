@@ -36,8 +36,7 @@ from the archived tables.
 Two figures have no script. `fig1_dataset.png` is the dataset waterfall,
 hand-finished from the funnel counts in `data/dataset_funnel.csv` (the counts
 themselves are asserted by the figdata oracle), and `fig2.png` is a hand-drawn
-schematic of the funding cone with no experimental values in it. Both are
-checked against the SHA-256 values recorded in `run_all.py`.
+schematic of the funding cone with no experimental values in it.
 
 If you compare against the PDF, Fig. C1 will look smaller there than
 `figC1_missingness.png` does here. The manuscript embeds this figure's 150 dpi
