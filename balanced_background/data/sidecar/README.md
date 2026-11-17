@@ -6,21 +6,21 @@ factory (fac_*) feature tables are rebuildable from the funding cones by
 audit itself is run by `../../code/02_evaluate_cross_actor/missingness_audit.py`.
 
 Source mapping. Every file was copied verbatim from the research archive
-`研究工程_结构化` (which is not modified).
+`research-workspace` (which is not modified).
 
-| package file | source under 研究工程_结构化 |
+| package file | source under research-workspace |
 |---|---|
-| sidecar_features_before_recovery.csv | 27_L21_Sidecar增量评估/A0_merge/l21_combined_feature_table.csv |
-| sidecar_features_after_recovery.csv | 28_L22_新12组Out边补全与Sidecar重测/A0_merge/l22_sidecar_feature_table_v2.csv |
+| sidecar_features_before_recovery.csv | 27_L21_sidecar-incremental-evaluation/A0_merge/l21_combined_feature_table.csv |
+| sidecar_features_after_recovery.csv | 28_L22_out-edge-recovery-12-new-groups-and-sidecar-rerun/A0_merge/l22_sidecar_feature_table_v2.csv |
 | recovered_out_edges.csv | 28_L22_.../A0_merge/l22_recovered_out_edges.csv |
 | outedge_recovery_status.csv | 28_L22_.../A0_merge/l22_outedge_recovery_status.csv |
 | source_log.jsonl | 28_L22_.../A0_merge/l22_source_log.jsonl |
-| _real_ledgers.json | 01_冻结档案/04_FACTORY_sidecar/_real_ledgers.json |
-| _bean_ledgers.json | 01_冻结档案/04_FACTORY_sidecar/_bean_ledgers.json |
-| _audmonk_ledgers.json | 01_冻结档案/04_FACTORY_sidecar/_audmonk_ledgers.json |
-| A17_cone_ledger_v2.json | 04_Phi提取/A17_cone_ledger_v2.json |
-| l17_cone_edges.csv | 23_L17_Phi预检查与冻结提取/A0_merge/l17_cone_edges.csv |
-| l20_step0_feature_table.csv | 26_L20_A18预注册评估执行/A0_merge/l20_step0_feature_table.csv |
+| _real_ledgers.json | 01_frozen-archive/04_FACTORY_sidecar/_real_ledgers.json |
+| _bean_ledgers.json | 01_frozen-archive/04_FACTORY_sidecar/_bean_ledgers.json |
+| _audmonk_ledgers.json | 01_frozen-archive/04_FACTORY_sidecar/_audmonk_ledgers.json |
+| A17_cone_ledger_v2.json | 04_phi-extraction/A17_cone_ledger_v2.json |
+| l17_cone_edges.csv | 23_L17_phi-precheck-and-frozen-extraction/A0_merge/l17_cone_edges.csv |
+| l20_step0_feature_table.csv | 26_L20_A18-prereg-evaluation-run/A0_merge/l20_step0_feature_table.csv |
 
 Notes: `sidecar_features_before_recovery.csv` is regenerated in place (and verified
 byte-equal at the factory-feature cells) by `build_sidecar_features.py` from the

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import csv, io, os, json, hashlib, datetime, urllib.request, time
 import numpy as np
-ROOT = r"C:\Users\XYL\Desktop\区块链论文\研究工程_结构化"
-L21 = os.path.join(ROOT, r"02_当前研究\05_Phi数据扩展\27_L21_Sidecar增量评估\A0_merge")
-L17 = os.path.join(ROOT, r"02_当前研究\05_Phi数据扩展\23_L17_Phi预检查与冻结提取\A0_merge")
-L20 = os.path.join(ROOT, r"02_当前研究\05_Phi数据扩展\26_L20_A18预注册评估执行\A0_merge")
-OUTD = os.path.join(ROOT, r"02_当前研究\05_Phi数据扩展\28_L22_新12组Out边补全与Sidecar重测\A0_merge"); os.makedirs(OUTD, exist_ok=True)
+ROOT = r"C:\Users\XYL\Desktop\blockchain-paper\research-workspace"
+L21 = os.path.join(ROOT, r"02_current-research\05_phi-data-extension\27_L21_sidecar-incremental-evaluation\A0_merge")
+L17 = os.path.join(ROOT, r"02_current-research\05_phi-data-extension\23_L17_phi-precheck-and-frozen-extraction\A0_merge")
+L20 = os.path.join(ROOT, r"02_current-research\05_phi-data-extension\26_L20_A18-prereg-evaluation-run\A0_merge")
+OUTD = os.path.join(ROOT, r"02_current-research\05_phi-data-extension\28_L22_out-edge-recovery-12-new-groups-and-sidecar-rerun\A0_merge"); os.makedirs(OUTD, exist_ok=True)
 UA = {"User-Agent": "Mozilla/5.0"}; W = 7 * 24 * 3600; THRESH = 10.0; DENOM = {0.1, 1.0, 10.0, 100.0}
 PHI15 = ['observed_hops', 'path_elapsed_time', 'dwell_mean_h', 'dwell_max_h', 'coverage', 'attribution_ambiguous', 'node_context_out_degree', 'node_context_in_degree', 'wallet_age_min_h', 'node_context_resid_Rrange_max', 'node_context_resid_nin_mean', 'node_context_resid_nout_mean', 'boundary_type', 'censoring_reason', 'observation_confidence']
 FAC = ['fac_funder_present', 'fac_hub_present', 'fac_funder_fanout', 'fac_hub_fanout', 'fac_funder_out_unif', 'fac_funder_out_quant', 'fac_fund_quant', 'fac_n_fresh_siblings']
@@ -226,7 +226,7 @@ wd('l22_incremental_comparison.csv', inc, ['split_name', 'model_id', 'metric_nam
 from collections import Counter
 st = Counter(r['status'] for r in rec_status)
 nfull = st.get('OUT_EDGE_RECOVERED_FULL', 0) + st.get('OUT_EDGE_NOT_NEEDED', 0); npart = st.get('OUT_EDGE_RECOVERED_PARTIAL', 0); nblk = st.get('OUT_EDGE_BLOCKED_SOURCE_ACCESS', 0)
-phi_h = hashlib.sha256(open(os.path.join(ROOT, r"01_冻结档案\01_Phi初期实验\phi.py"), 'rb').read()).hexdigest(); pipe_h = hashlib.sha256(open(os.path.join(ROOT, r"01_冻结档案\01_Phi初期实验\pipeline.py"), 'rb').read()).hexdigest()
+phi_h = hashlib.sha256(open(os.path.join(ROOT, r"01_frozen-archive\01_phi-early-experiments\phi.py"), 'rb').read()).hexdigest(); pipe_h = hashlib.sha256(open(os.path.join(ROOT, r"01_frozen-archive\01_phi-early-experiments\pipeline.py"), 'rb').read()).hexdigest()
 def gg(s, b, m, mt):
     a = [x for x in agg if x['split_name'] == s and x['feature_block'] == b and x['model_id'] == m and x['metric_name'] == mt]; return a[0]['value'] if a else None
 rs = "LOAGO logreg AUROC: PHI=%s SIDECAR(outedge)=%s PHI+SIDECAR(outedge)=%s | recovery full/part/blocked=%d/%d/%d" % (gg('LOAGO_leave_one_actor_group_out', 'PHI_ONLY', 'logreg', 'auroc'), gg('LOAGO_leave_one_actor_group_out', 'SIDECAR_ONLY_OUTEDGE_RECOVERED', 'logreg', 'auroc'), gg('LOAGO_leave_one_actor_group_out', 'PHI_PLUS_SIDECAR_OUTEDGE_RECOVERED', 'logreg', 'auroc'), nfull, npart, nblk)

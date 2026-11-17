@@ -13,7 +13,7 @@ permutation_sensitivity.py (corrected immutable-block sensitivity, reported as-i
 missingness_audit.py (sidecar), all into a private staging dir; then, after the
 0.703 gate + atomic promotion, robustness/run_robustness.py (recomputes the
 robustness perturbations from the frozen cones and renders the forest) and the
-figure scripts, a rebuild of SHA256SUMS.txt, and final consistency checks.
+figure scripts, and final consistency checks.
 
 Notes
 -----
@@ -21,7 +21,7 @@ Notes
   (including the Python minor version) stops the official run unless you pass
   --allow-nonreference. No network, ever.
 * The inputs are checked for presence and for the 169/30/139 event counts before
-  anything runs. File checksums are in SHA256SUMS.txt (`sha256sum -c SHA256SUMS.txt`).
+  anything runs.
 * The derived results are transactional: the compute steps (evaluate /
   permutation / sensitivity / sidecar) write to a private staging directory, the
   run is gated on the 0.703 macro AUROC, and data/ is overwritten only then, one
@@ -30,12 +30,11 @@ Notes
   committed results / frozen inputs; a failure there leaves data/ correct and is
   fixed by re-running; the transactional boundary is exactly the promote step above.
 * --fast runs a 100-shuffle permutation in the sandbox and never promotes it, so a
-  smoke test can never leave non-publishable numbers in data/, figures/, robustness/,
-  or SHA256SUMS.txt.
+  smoke test can never leave non-publishable numbers in data/, figures/ or
+  robustness/.
 """
 
 import csv
-import hashlib
 import io
 import os
 import shutil
@@ -83,14 +82,6 @@ FROZEN_INPUTS = [
     "archive/frozen_extraction/phi.py",
     "archive/frozen_extraction/pipeline.py",
 ]
-
-
-def sha256(path):
-    h = hashlib.sha256()
-    with open(path, "rb") as fh:
-        for chunk in iter(lambda: fh.read(1 << 20), b""):
-            h.update(chunk)
-    return h.hexdigest()
 
 
 def run(script, cwd, extra=(), env=None):
@@ -149,23 +140,6 @@ def check_inputs():
     assert len({e["crew"] for e in events if int(e["is_illicit"])}) == 17, "expected 17 crews"
     print(f"  {len(FROZEN_INPUTS)} input files present")
     print(f"  upstream_features.csv: 169 events (30 illicit / 139 background / 17 crews)")
-
-
-def rebuild_checksums():
-    rows = []
-    for root, _, files in os.walk(HERE):
-        if "__pycache__" in root or os.sep + ".git" in root or os.sep + ".staging_results" in root:
-            continue
-        for fn in sorted(files):
-            if fn == "SHA256SUMS.txt" or fn == ".forest_ckpt.json":
-                continue
-            p = os.path.join(root, fn)
-            rows.append((sha256(p), os.path.relpath(p, HERE).replace(os.sep, "/")))
-    rows.sort(key=lambda r: r[1])
-    # LF endings, or `sha256sum -c` on Linux/macOS reads every name with a trailing \r
-    with io.open(os.path.join(HERE, "SHA256SUMS.txt"), "w", encoding="utf-8", newline="\n") as fh:
-        fh.write("\n".join(f"{h}  {r}" for h, r in rows) + "\n")
-    print(f"  SHA256SUMS.txt: {len(rows)} files")
 
 
 def staged_macro(staging):
@@ -236,7 +210,7 @@ def main():
         print(f"\n{'='*70}\n# SMOKE TEST\n{'='*70}")
         print(f"  staged 17-crew AUROC {macro:.6f} (100-shuffle permutation p is not publishable)")
         shutil.rmtree(staging, ignore_errors=True)
-        print("  --fast complete. data/, figures/ and SHA256SUMS.txt were NOT modified.")
+        print("  --fast complete. data/ and figures/ were NOT modified.")
         return
 
     # ---- promote staging -> data/ atomically, only now that everything passed ----
@@ -259,10 +233,9 @@ def main():
         print("only the committed results/inputs; nothing is left partial in data/.")
         raise
 
-    print(f"\n{'='*70}\n# checksums + final checks\n{'='*70}")
+    print(f"\n{'='*70}\n# final checks\n{'='*70}")
     assert os.path.exists(os.path.join(HERE, "figures", "fig1_dataset.png")), "figures/fig1_dataset.png missing"
     assert os.path.exists(os.path.join(HERE, "figures", "fig2.png")), "figures/fig2.png missing"
-    rebuild_checksums()
     final_checks()
     print(f"\n{'='*70}\nDONE. Headline: data/main_results.csv (17-crew AUROC 0.703). "
           f"Figures in figures/.\n{'='*70}")

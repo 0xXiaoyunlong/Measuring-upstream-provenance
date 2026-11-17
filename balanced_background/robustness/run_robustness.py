@@ -202,7 +202,7 @@ def main():
         return
 
     base_auroc = out["baseline"][0]
-    # DATA-SWAP RUN (数据替换实验): the negative/background set was replaced by the
+    # DATA-SWAP RUN: the negative/background set was replaced by the
     # temporally balanced set, so the baseline is NOT the canonical 0.703 -- the
     # 0.703 anchor is intentionally lifted here (approved). The recompute is still
     # self-consistent (same cones -> Phi -> LOCO); it is cross-checked against

@@ -71,11 +71,11 @@ then `robustness/run_robustness.py` (recomputes the robustness perturbations
 from the frozen cones and renders the data tables + battery figures), the
 **figure scripts** (`fig3_signal.py`, `fig4_audit.py`, `figC1_heatmap.py`, and
 the two-background `fig5_forest.py`, `fig6_timeline.py`, `fig7_dualcontrol.py`),
-a rebuild of `SHA256SUMS.txt`, and final consistency checks.
+and final consistency checks.
 Every step uses single-thread BLAS and fails the whole run on any error; nothing
 falls back to an old CSV or the network. (`--fast` runs a 100-shuffle permutation
-for a smoke test — not a publishable run, and it never touches `data/`, `figures/`,
-`robustness/`, or `SHA256SUMS.txt`.)
+for a smoke test — not a publishable run, and it never touches `data/`, `figures/`
+or `robustness/`.)
 
 **Figures.** The statistical figures (Fig 3-7 and C1) are regenerated as PNGs
 from the archived files by the scripts in `code/03_make_figures/`; the numbers
@@ -135,7 +135,6 @@ fold-reassignment check) each have their own script and archived output in
 ```
 ├── run_all.py                                   one-command end-to-end reproduction
 ├── requirements-exact.txt / requirements.txt   the reference environment
-├── SHA256SUMS.txt                               checksums (`sha256sum -c SHA256SUMS.txt`)
 ├── data/                                        169 deposits, the folds, and the derived result CSVs
 │   └── sidecar/                                 underlying factory tables + frozen cones for the audit
 ├── code/
@@ -143,7 +142,7 @@ fold-reassignment check) each have their own script and archived output in
 │   ├── 02_evaluate_cross_actor/                 evaluate / permutation_test / permutation_sensitivity / missingness_audit
 │   │   └── sidecar/                             build_sidecar_features + evaluate_sidecar
 │   └── 03_make_figures/                         the six figure scripts + figdata.py oracle
-├── archive/frozen_extraction/                   the frozen phi.py/pipeline.py, exact bytes
+├── archive/frozen_extraction/                   the frozen phi.py/pipeline.py as they ran
 ├── figures/                                     fig1-fig7 + figC1 as published (+ static fig2.png)
 ├── robustness/                                  the 30-variant battery (1.3.2, anchored to 0.703)
 │   └── appendix_checks/                         scripts + outputs behind the appendix numbers

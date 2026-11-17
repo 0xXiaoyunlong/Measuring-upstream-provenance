@@ -267,6 +267,6 @@
   "n_perm": 1000,
   "seed": 20260629,
   "null": "group-count-preserving (crew blocks + background singletons)",
-  "note": "DATA-SWAP RUN (数据替换实验): temporally balanced background; canonical 0.703/27-1001 anchor lifted; main is this run's own value"
+  "note": "DATA-SWAP RUN: temporally balanced background; canonical 0.703/27-1001 anchor lifted; main is this run's own value"
  }
 }

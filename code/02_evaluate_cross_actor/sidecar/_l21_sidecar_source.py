@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import csv, io, os, json, hashlib, datetime
 import numpy as np
-ROOT = r"C:\Users\XYL\Desktop\区块链论文\研究工程_结构化"
-L20 = os.path.join(ROOT, r"02_当前研究\05_Phi数据扩展\26_L20_A18预注册评估执行\A0_merge")
-L17 = os.path.join(ROOT, r"02_当前研究\05_Phi数据扩展\23_L17_Phi预检查与冻结提取\A0_merge")
-F = os.path.join(ROOT, r"01_冻结档案\04_FACTORY_sidecar")
-A17C = os.path.join(ROOT, r"02_当前研究\05_Phi数据扩展\04_Phi提取\A17_cone_ledger_v2.json")
-OUTD = os.path.join(ROOT, r"02_当前研究\05_Phi数据扩展\27_L21_Sidecar增量评估\A0_merge"); os.makedirs(OUTD, exist_ok=True)
+ROOT = r"C:\Users\XYL\Desktop\blockchain-paper\research-workspace"
+L20 = os.path.join(ROOT, r"02_current-research\05_phi-data-extension\26_L20_A18-prereg-evaluation-run\A0_merge")
+L17 = os.path.join(ROOT, r"02_current-research\05_phi-data-extension\23_L17_phi-precheck-and-frozen-extraction\A0_merge")
+F = os.path.join(ROOT, r"01_frozen-archive\04_FACTORY_sidecar")
+A17C = os.path.join(ROOT, r"02_current-research\05_phi-data-extension\04_phi-extraction\A17_cone_ledger_v2.json")
+OUTD = os.path.join(ROOT, r"02_current-research\05_phi-data-extension\27_L21_sidecar-incremental-evaluation\A0_merge"); os.makedirs(OUTD, exist_ok=True)
 
 PHI15 = ['observed_hops', 'path_elapsed_time', 'dwell_mean_h', 'dwell_max_h', 'coverage', 'attribution_ambiguous',
          'node_context_out_degree', 'node_context_in_degree', 'wallet_age_min_h',
@@ -308,8 +308,8 @@ wd('l21_model_specs.csv', [
  dict(model_id='baseline_sidecar_rank', feature_block='SIDECAR_ONLY', preprocessing='none', parameters='mean(z? no) of hub_fanout+funder_fanout+n_fresh_siblings; missing->lowest', tuning_allowed='no', notes='non-learning; missing core -> NOT_ESTIMABLE'),
 ], ['model_id', 'feature_block', 'preprocessing', 'parameters', 'tuning_allowed', 'notes'])
 
-phi_h = hashlib.sha256(open(os.path.join(ROOT, r"01_冻结档案\01_Phi初期实验\phi.py"), 'rb').read()).hexdigest()
-pipe_h = hashlib.sha256(open(os.path.join(ROOT, r"01_冻结档案\01_Phi初期实验\pipeline.py"), 'rb').read()).hexdigest()
+phi_h = hashlib.sha256(open(os.path.join(ROOT, r"01_frozen-archive\01_phi-early-experiments\phi.py"), 'rb').read()).hexdigest()
+pipe_h = hashlib.sha256(open(os.path.join(ROOT, r"01_frozen-archive\01_phi-early-experiments\pipeline.py"), 'rb').read()).hexdigest()
 def g(split, block, mid, met):
     a = [x for x in agg if x['split_name'] == split and x['feature_block'] == block and x['model_id'] == mid and x['metric_name'] == met]
     return a[0] if a else None

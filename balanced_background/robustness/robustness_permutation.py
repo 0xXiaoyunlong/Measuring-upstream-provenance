@@ -323,7 +323,7 @@ def main():
     data = dict(none=none_row, loo=loo, params=params, feats=feats, main=ck["main"]["auroc"],
                 meta=dict(sklearn=__import__("sklearn").__version__, n_perm=N_PERM, seed=SEED,
                           null="group-count-preserving (crew blocks + background singletons)",
-                          note="DATA-SWAP RUN (数据替换实验): temporally balanced background; "
+                          note="DATA-SWAP RUN: temporally balanced background; "
                                "canonical 0.703/27-1001 anchor lifted; main is this run's own value"))
     out = os.path.join(HERE, "robustness_forest_data.json")
     json.dump(data, io.open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)

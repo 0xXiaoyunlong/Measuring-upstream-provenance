@@ -1,11 +1,11 @@
-# 统一数据管线: 原始链上事件 -> campaign -> cone -> Phi (同一入口)
-# Harmony/Beanstalk/第三案件 必须调用完全相同代码。不读 label/incident。
+# unified data pipeline: raw on-chain events -> campaign -> cone -> Phi (one entry point)
+# Harmony/Beanstalk/third case must call exactly the same code. No label/incident is read.
 import urllib.request, json, time, os
 from phi import compute_phi, PARAMS, PHI_FEATURES
-KEY=os.environ.get('ETHERSCAN_KEY','')   # 从环境变量读, 不硬编码
+KEY=os.environ.get('ETHERSCAN_KEY','')   # from the environment, not hard-coded
 DEP_TOPIC='0xa945e51eec50ab98c161376f0db4cf2aeba3ec92755fe2fcd388bdbbb80ff196'
 THRESH=10*10**18; DEPTH=PARAMS['max_depth']; CONE_CAP=25
-W=PARAMS['W_seconds']; CAMPAIGN_GAP=48*3600   # campaign 合并间隔(数据管线职责, 非 Phi 参数)
+W=PARAMS['W_seconds']; CAMPAIGN_GAP=48*3600   # campaign merge gap(pipeline's job, not a Phi param)
 SWAP_SRC={'0x1111111254eeb25477b68fb85ed929f73a960582','0x1111111254fb6c44bac0bed2854e76f90643097d',
  '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2','0x7a250d5630b4cf539739df2c5dacb4c659f2488d',
  '0xe592427a0aece92de3edee1f18e0157c05861564','0xdef1c0ded9bec7f1a1670819833240f027b25eff',
@@ -19,7 +19,7 @@ def _get(p):
     return {}
 _code={}
 def _is_contract(a, block):
-    # 时间一致: 在 t0 对应 block 查代码, 禁用 t0 后链上状态
+    # time consistency: read code at the block matching t0; no chain state after t0
     k=(a,block)
     if k in _code: return _code[k]
     r=_get('module=proxy&action=eth_getCode&address=%s&tag=0x%x'%(a,block)).get('result','0x')
@@ -35,11 +35,11 @@ def _win_txs(a,sb,eb,t0):
         for t in (j.get('result') or []):
             if not isinstance(t,dict): continue
             v=int(t.get('value','0')); ts=int(t['timeStamp'])
-            if v<THRESH or ts>=t0 or ts<t0-W: continue       # 严格窗口 [t0-W, t0)
+            if v<THRESH or ts>=t0 or ts<t0-W: continue       # strict window [t0-W, t0)
             if t.get('to','').lower()==a: ins.append((t.get('from','').lower(),v/1e18,ts))
             if t.get('from','').lower()==a: outs.append((t.get('to','').lower(),v/1e18,ts))
     return ins,outs
-# === 共享 cone 构造 (Harmony/Beanstalk/第三案件 同一函数) ===
+# === shared cone construction (Harmony/Beanstalk/third case, same function) ===
 def build_cone(sender,t0,dep_block):
     sb=max(0,dep_block-50400); cone={}; frontier=[(sender,0)]
     while frontier and len(cone)<CONE_CAP:
@@ -53,9 +53,9 @@ def build_cone(sender,t0,dep_block):
             for (frm,amt,ts) in ins:
                 if frm and frm not in cone: frontier.append((frm,d+1))
     return cone
-# === campaign 构造 (数据管线职责) ===
+# === campaign construction (pipeline's job) ===
 def build_campaigns(deposits):
-    # deposits: [{'from','ts','block',...}]; 同址 gap<CAMPAIGN_GAP 合并; t0=首存
+    # deposits: [{'from','ts','block',...}]; same address, gap<CAMPAIGN_GAP merged; t0=first deposit
     by={}
     for o in deposits: by.setdefault(o['from'],[]).append(o)
     camps=[]
@@ -66,7 +66,7 @@ def build_campaigns(deposits):
             else: camps.append(cur); cur=[o]
         camps.append(cur)
     return [{'address':c[0]['from'],'t0':c[0]['ts'],'block':c[0]['block'],'n_events':len(c)} for c in camps]
-# === 端到端: 一个案件配置 -> Phi 结果 (无标签) ===
+# === end to end: one case config -> Phi results (no labels) ===
 def get_pool_deposits(pool, sb, eb):
     lg=_get('module=logs&action=getLogs&address=%s&topic0=%s&fromBlock=%d&toBlock=%d'%(pool,DEP_TOPIC,sb,eb))
     out=[]; seen=set()
@@ -78,7 +78,7 @@ def get_pool_deposits(pool, sb, eb):
         if r and r.get('from'): out.append({'from':r['from'].lower(),'ts':int(L['timeStamp'],16),'block':int(r['blockNumber'],16)})
     return out
 def process_case(config, V=100.0, on_each=None):
-    # config={'pool','start_block','end_block'} —— 仅结构, 无 label/incident
+    # config={'pool','start_block','end_block'} -- structure only, no label/incident
     deps=get_pool_deposits(config['pool'],config['start_block'],config['end_block'])
     camps=build_campaigns(deps); results=[]
     for c in camps:
@@ -87,7 +87,7 @@ def process_case(config, V=100.0, on_each=None):
         except Exception as e: results.append({'address':c['address'],'phi':None,'error':str(e)})
         if on_each: on_each()
     return results
-# 复用已存 cone 计算 Phi (dev 验证; cone 由本 build_cone 等价逻辑生成)
+# Phi from an already-stored cone (dev check; cone built by logic equivalent to build_cone)
 def phi_from_ledger(ledger_path, V=100.0):
     led=json.load(open(ledger_path)); res=[]
     for s,rec in led.items():
